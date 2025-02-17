@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 
 import com.talescoelho.course.entities.User;
 import com.talescoelho.course.repositories.UserRepository;
+import com.talescoelho.course.service.exceptions.ResourceNotFoundExceptions;
 
 @Service
 public class UserService {
@@ -22,7 +23,7 @@ public class UserService {
 	
 	public User findById(Long id) {
 		Optional<User> obj = userRepository.findById(id);
-		return obj.get();
+		return obj.orElseThrow(()-> new ResourceNotFoundExceptions(id));
 	}
 	
 	public User insert(User obj) {
